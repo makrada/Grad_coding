@@ -22,7 +22,7 @@ struct node1 *dc_root;
 char str[10];
 int nonz = 0;
 
-//vazei to kathe kyklwmatiko stoixeio san node sthn lista
+//each node is a circuit element 
 void add_list(struct elem *element){
   struct node *tmp;
   tmp = (struct node *)malloc(sizeof(struct node));
@@ -32,7 +32,6 @@ void add_list(struct elem *element){
 }
 
 
-//diatrexei ti lista gia na vrei tis autepagwges
 int change_nodes(int m2){
   
   struct node *tmp;
@@ -40,13 +39,11 @@ int change_nodes(int m2){
     
     if (tmp->element->type[0] == 'L') {
       m2++;
-      //sprintf(tmp->element->type,"V%d",m2);
     }
   }
-  return m2; // epistrefw to kainourgio plithos 
+  return m2;  
 }
 
-//allazei to L se V
 void change_name(int m2){
   
   struct node *tmp;
@@ -59,7 +56,7 @@ void change_name(int m2){
   }
 }
 
-//katharismos ths listas
+
 void clear_list(){
   struct node *tmp;
   
@@ -70,7 +67,7 @@ void clear_list(){
   free(tmp);
 }
 
-//ektypwsh ths listas
+
 void print_list(){
   struct node *tmp;
   
@@ -81,7 +78,6 @@ void print_list(){
   }
 }
 
-//checkarei an yparxoyn 2 stoixeia me to idio onoma
 void check_list(){
   struct node *tmp;
   struct node *tmp1;
@@ -93,7 +89,8 @@ void check_list(){
     }
   }
 }
-//vriskei ta mi midenika stoixeia tou netlist
+
+
 int check_list2(){
   struct node *tmp;
   
@@ -143,7 +140,7 @@ void clear_list2(){
   free(tmp);
 }
 
-//ektypwsh ths listas dc
+//print list dc
 void dc_print_list(){
   struct node1 *tmp;
   for(tmp = dc_root; tmp!= (struct node1 *) 0; tmp=tmp->nxt){
@@ -170,13 +167,12 @@ void dc_add_list(struct dc_nodes *element1){
 
 
 /******************************************************************************************************************/
-// h sunartish pou ulopoiei to sistima 
+
 void MNAG(double **pinakasG,int size,double *b,char **vector,double max,int m2,struct dc_nodes* elem1){
   struct node *tmp;
   struct node1 *tmp2;
   int k=0;
   int i,j,temp;
-  //double test;
   
   
   for(tmp = root; tmp!= (struct node *) 0; tmp=tmp->nxt){
@@ -195,9 +191,6 @@ void MNAG(double **pinakasG,int size,double *b,char **vector,double max,int m2,s
       }
     }
     if(tmp->element->type[0] == 'I'){
-      //      printf("Gia to %s exoume :\n",tmp->element->type);
-      //      test = value_for_time(tmp->element,8,10);
-      //      printf("lalalalalala %lf\n",test);
       if((tmp->element->term[0] != 0) && (tmp->element->term[1]!=0)){
 	b[(int)tmp->element->term[0]-1] += -tmp->element->value[0];
 	b[(int)tmp->element->term[1]-1] += tmp->element->value[0];
@@ -359,7 +352,7 @@ int mapa(){
     
   }
   map =malloc(sizeof(double)*k);
-  //printf("to k einai :%d",k);
+ 
   for(tmp = root,i=0; (tmp!= (struct node *) 0); tmp=tmp->nxt,i=i+2){
     
     map[i]=tmp->element->term[0];
@@ -372,7 +365,7 @@ int mapa(){
   
   free(map);
   
-  return(temp2);                         //epistrefei to max 
+  return(temp2);                         //returns max 
   
 }
 
@@ -443,8 +436,8 @@ void s_p_a_r_s_e(int max,int m2,int flag,int flag1){
   double *d,*temp;
   
   
-  plithos_nonz = check_list2();		//Gia ton G
-  plithos_nonz2 = check_list3();	//Gia ton C
+  plithos_nonz = check_list2();		// G
+  plithos_nonz2 = check_list3();	// C
   n = (max)+m2;
   
   temp = cs_malloc(n,sizeof(double));
@@ -578,7 +571,7 @@ void s_p_a_r_s_e(int max,int m2,int flag,int flag1){
     
   }
   
-  //metatroph tou A se compressed column
+  
   G = cs_compress((cs *)A); 
   C = cs_compress((cs *)B);
   
@@ -614,11 +607,9 @@ void s_p_a_r_s_e(int max,int m2,int flag,int flag1){
   else if(flag == 4){
     d = diag(G,n);
   printf("***************************  Sparse  CG  decomposition     ******************************************\n");
-    /************************************** ALLAGH **************************************************/ 
 
    for(i=0;i<n;i++) {x[i] = 0.0;}  
    sparse_CG(x,G,b,1e-3,n,d);
-     /************************************** ALLAGH **************************************************/ 
 
   }
   
@@ -626,10 +617,10 @@ void s_p_a_r_s_e(int max,int m2,int flag,int flag1){
     d = diag(G,n);
     printf("***************************   Sparse Bi-CG   decomposition ******************************************\n");
     for(i=0;i<n;i++) {x[i] = 0.0;}  
-    sparse_Bi_CG(x,G,b,1e-3,n,d);
-    
-  /************************************** ALLAGH **************************************************/ 
-  }else if(flag == 8 || flag == 7){
+    sparse_Bi_CG(x,G,b,1e-3,n,d);  
+  }
+  
+  else if(flag == 8 || flag == 7){
      d = diag(G,n);
      for(i=0;i<n;i++) {x[i] = 0.0;}  
      sparse_CG(x,G,b,1e-3,n,d);
@@ -652,7 +643,6 @@ void s_p_a_r_s_e(int max,int m2,int flag,int flag1){
   }
   
 }
-  /************************************** ALLAGH **************************************************/ 
 
   if(flag1==1){
     printf("***************************  Sparse dc sweep analysis      ******************************************\n");
@@ -696,9 +686,6 @@ double *lu_sparse(cs *G,int plithos_nonz,int n,double *b){
   }
   printf("\n");
   
-  // cs_spfree(G);  
-  // cs_sfree(S);
-  // cs_nfree(N);
   
   return(b);
 }
@@ -727,9 +714,6 @@ double *chol_sparse(cs *G,int plithos_nonz,int n,double *b){
   }
   printf("\n");
   
-  //   cs_spfree(G);
-  //   cs_sfree(S);
-  //   cs_nfree(N);
   
   return(b);
 }
@@ -931,7 +915,7 @@ double* diag(cs *A,int size){
   cnt=0;
   d = malloc(size*sizeof(double));
   
-  for(j=0;j<size;j++){ //arxikopoish diagwniwn stoixeiwn
+  for(j=0;j<size;j++){
 		d[j] = 1.0;
   }
   
@@ -1015,10 +999,8 @@ void dc_sweep_sparse(cs *pinakasG,int non_z,int size,double *b,int flag){
     
     for(j=tmp->element->start;j<=tmp->element->end;j=j+tmp->element->step){
       
-      //        for(i=0;i<size;i++){
-      // 	 res[i] = temp[i];
-      //       }
-      res = temp; // ALLAGH
+     
+      res = temp; 
       
       b = res;
       
@@ -1104,7 +1086,7 @@ double value_for_time(struct dc_nodes *element , double t, double finalTime){
     else{ return(-1); }
   }
   
-  //An to trans_spec einai PULSE//
+  
   else if(element->flag == 2){
     if( (t >= 0)&&(t < element->trans_spec[2]) ) { 
       return(element->trans_spec[0]); 
@@ -1128,7 +1110,7 @@ double value_for_time(struct dc_nodes *element , double t, double finalTime){
     else{return(-2);}
   }
   
-  //An to trans_spec einai SIN//
+  
   else if(element->flag == 3){
     if( (t >= 0) && (t < element->trans_spec[3]) ){
       res = element->trans_spec[0] + element->trans_spec[1]*sin( (2*pi*element->trans_spec[5])/360 );
@@ -1141,7 +1123,7 @@ double value_for_time(struct dc_nodes *element , double t, double finalTime){
     else{ return(-3); }
   }
   
-  //An to trans_spec einai PWL//
+  
   else if(element->flag == 4){
     if( (t>=0) && (t<element->trans_spec[0]) ) { 
       return(element->trans_spec[1]); 
@@ -1172,16 +1154,13 @@ double value_for_time(struct dc_nodes *element , double t, double finalTime){
 /************************************************************************************/
 double linear1(double t1, double t2, double val1, double val2,double t){
   
-  //Ypologizw th grammikh eksiswsh res = a*t +b
-  double a,b,res;
   
-  //Prwta upologizw thn klish a ths eytheias, opou a = (val2-val1)/(t2-t1)
+      double a,b,res;
+  
+  
       a = (val2-val1) / (t2-t1);
-      
-      //Meta ypologizw to b, opou b = val1 - a*t1
       b = val1 - a*t1;
-      
-      //Kai telos antikathistw sthn eksiswsh gia na vrw to res,opou res = a*t + b 
+       
       res = a*t + b;
       
       return(res);
@@ -1192,16 +1171,13 @@ double linear1(double t1, double t2, double val1, double val2,double t){
 /***********************************************************************************/
 double linear2(double t1, double t2, double val1, double val2,double t){
   
-  //Ypologizw th grammikh eksiswsh res = -a*t +b
-  double a,b,res;
   
-  //Prwta upologizw thn klish a ths eytheias, opou a = (val1-val2)/(t1-t2)
+      double a,b,res;
+  
+  
       a = (val1-val2) / (t1-t2);
-      
-      //Meta ypologizw to b, opou b = val2 + a*t1
       b = val2 + a*t1;
       
-      //Kai telos antikathistw sthn eksiswsh gia na vrw to res,opou res = -a*t + b 
       res = -a*t + b;
       
       return(res);
@@ -1364,7 +1340,7 @@ void transient_analysis(double **pinakasG,double **pinakasC,int flag,double *x1,
   double step;
   char type[2];
   
-  struct node1 *tmp; //sarwnw ti dc_root
+  struct node1 *tmp; 
   
     y = malloc(sizeof(double)*size);
     da  = calloc(sizeof(double)*size,sizeof(double)); 
@@ -1430,8 +1406,6 @@ for(i = 0;i < size;i++){ k[i] = x1[i]; }
     
     if(flag==7){fprintf(fp3,"KANW AC_SWEEP ME TH METHODO BE\n\n");}
     else if(flag==8){fprintf(fp3,"KANW AC_SWEEP ME TH METHODO TR\n\n");}
-    
-    //elegxoume ti typos einai ayto pou pame na kanoume plot
 
   
     if(tmp->element->type[0] == 'I'){
@@ -1459,7 +1433,7 @@ for(i = 0;i < size;i++){ k[i] = x1[i]; }
       
       
       if(tmp->element->type[0] == 'V'){
-	b[tmp->element->pos]=value_for_time(tmp->element,t,end);   //.<<--edw prepei na allaksei h parametros sth synarthsh value for time kai na ginei typou node2 
+	b[tmp->element->pos]=value_for_time(tmp->element,t,end); 
       }
       
       if(tmp->element->type[0] == 'I'){
@@ -1478,13 +1452,6 @@ for(i = 0;i < size;i++){ k[i] = x1[i]; }
       if(flag==8){
 	
 	printf("************** Back Euler! ********************************\n");
-	//prepei na allaksei o G  na pernietai kathe fora o arxikos//
-// 	for(i=0;i<size;i++){
-// 	  for(j=0;j<size;j++){
-// 	      fprintf(fp3,"o pinakas G pou pernietai einai : G[%d][%d] = %lf\n",i,j,pinakasP[i][j]);
-// 	  }
-// 	}
-	
 	
 	data = back_euler(pinakasP,pinakasC,k,b,size,step,A,tmps,da,y);
 	
@@ -1566,7 +1533,6 @@ for(i = 0;i < size;i++){ k[i] = x1[i]; }
   
   for(tmp = dc_root; tmp!= (struct node1 *) 0; tmp=tmp->nxt){  
     counter++;
-    //printf("\n\n %d) DC_sweep for %s\n\n",counter,tmp->element->type);
     
     
     if(flag == 7){ 
@@ -1600,14 +1566,11 @@ for(i = 0;i < size;i++){ k[i] = x1[i]; }
       
       for(j=0;j<=end;j=j+step){
       
-      //        for(i=0;i<size;i++){
-      // 	 res[i] = temp[i];
-      //       }
-      res = temp; // ALLAGH
+      res = temp;
       
       b = res;
 	
-	  P = A; // ALLAGH
+	  P = A;
           
       if(tmp->element->type[0] == 'I'){
 	if(tmp->element->pos != -1){
