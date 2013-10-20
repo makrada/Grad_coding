@@ -17,35 +17,35 @@
   
   int main(int argc, char **argv){
     
-    //dilwseis metavlitwn
+    
     char str[20],str1[20],str2[3];
     int m2,size,i,size_of_str,j;
-    double **pinakasG,**pinakasC,**A,**B;       	//A
-    double *b,*b1,*tmp,*da;              		//b
+    double **pinakasG,**pinakasC,**A,**B;       	
+    double *b,*b1,*tmp,*da;              		
     double *k, *x,*y,*x1,*y1,*d,*d1,*data;   
     double **S;
-    char **vector;         				//x
+    char **vector;         				
     char c;
     int *p,*p1;
     int flag,flag1,flag2;
     double itol = 1e-3;
-    double term1,term2,term3,term4,var;     		//akrodektes 
-    int max;     					// n-1
+    double term1,term2,term3,term4,var;     		 
+    int max;     					
     int cnt =0;
     FILE *fp;
     struct elem *element;
     struct dc_nodes *elem1;
     struct  dc_nodes *element1;
 
-    /*Arxikopoihseis */
+    /*Initialization */
     flag=0;
     flag1=2;
     max=0;
-    m2=0;   			//#pigwn tashs
+    m2=0;   			
     size = 0;
     i=0;
     
-    //anoigma netlist gia diavasma
+    //open file to read netlist
     fp = fopen(argv[1],"r");
     
     
@@ -60,9 +60,9 @@
       if (fscanf(fp,"%s",str) == EOF) break;
       
       size_of_str = strlen(str);
-      size_of_str = size_of_str+1; // to size_of_str einai xwris ton teliko xaraktira(den to thelw auto => strcpy) 
+      size_of_str = size_of_str+1; 
       
-      //elegxos gia sxolia
+      
       if (str[0] == '*'){
 	do {
 	  c=getc(fp);
@@ -72,7 +72,7 @@
       
       element = (struct elem *)malloc(sizeof(struct elem));
 	
-      // an einai V h I h R h L h C                                                 
+                                                
       if((str[0] =='V')||(str[0] =='v')||(str[0] =='I')||(str[0] =='i')||(str[0] =='R')||(str[0] =='r')||(str[0] =='L')||(str[0] =='l')||(str[0] =='C')||(str[0] =='c')){
 	if((str[0] =='V')||(str[0] =='v')) m2++;
 	str[0] = toupper(str[0]);
@@ -106,7 +106,7 @@
 	  c = getc(fp);
 	  if(c != '\n'){
 	    fscanf(fp,"%s",str1);
-	    if(!strcmp(str1,"EXP")){				//An einai EXP
+	    if(!strcmp(str1,"EXP")){				
 		fscanf(fp,"%s",str1);
 		
 		element1->trans_spec = malloc(sizeof(double)*6);
@@ -115,7 +115,7 @@
 		fscanf(fp,"%s",str1);
 		element1->flag = 1;
 	    }
-	    else if(!strcmp(str1,"PULSE")){			//An einai PULSE
+	    else if(!strcmp(str1,"PULSE")){		
 		fscanf(fp,"%s",str1);
 		
 		element1->trans_spec = malloc(sizeof(double)*7);
@@ -125,7 +125,7 @@
 		
 		element1->flag = 2;
 	    }
-	    else if(!strcmp(str1,"SIN")){			//An einai SIN
+	    else if(!strcmp(str1,"SIN")){		
 		fscanf(fp,"%s",str1);
 		
 		element1->trans_spec = malloc(sizeof(double)*6);
@@ -135,7 +135,7 @@
 		
 		element1->flag = 3;
 	    }
-	    else if(!strcmp(str1,"PWL")){			//An einai PWD
+	    else if(!strcmp(str1,"PWL")){		
 		element1->trans_spec = malloc(sizeof(double)*(2*PAIRS));
 		
 		while(getc(fp)!='\n'){
@@ -155,7 +155,7 @@
 	    }
 	  }
 	  else if(c == '\n')
-	  {					//An den exei kapoia epilogh tote h default einai h value tou
+	  {				
 	      element1->trans_spec = malloc(sizeof(double));
 	      element1->trans_spec[0] = element->value[0];
 	      
@@ -169,7 +169,7 @@
          
 	}
 
-      }else if((str[0] =='Q')||(str[0] =='q')){      //an einai BJT
+      }else if((str[0] =='Q')||(str[0] =='q')){     
 	str[0] = toupper(str[0]);
 	element->type = malloc(sizeof(char)*size_of_str);
 	strcpy(element->type,str);
@@ -188,7 +188,7 @@
 	else printf("Terms must be non negative!\n");
 	
 	
-      }else if((str[0] =='M')||( str[0] =='m')){                     // an einai MOS
+      }else if((str[0] =='M')||( str[0] =='m')){                     
 	str[0] = toupper(str[0]);
 	element->type = malloc(sizeof(char)*size_of_str);
 	strcpy(element->type,str);
@@ -215,7 +215,7 @@
 	fscanf(fp,"%lf",&element->value[0]);
 	fscanf(fp,"%lf",&element->value[1]);
 	
-      }else if((str[0] =='D')||(str[0] =='d')){ 				    //an einai diodos
+      }else if((str[0] =='D')||(str[0] =='d')){ 				    
 	str[0] = toupper(str[0]);
 	element->type = malloc(sizeof(char)*size_of_str);
 	strcpy(element->type,str);
@@ -575,13 +575,13 @@
 
        }
     
-    // typwnw thn lista
-  //  dc_print_list();
+   
+  
     
-    //checkarei an yparxoyn 2 stoixeia me to idio onoma
+    //checks if there are 2 elements with the same name
     check_list();
     
-    //katharizw tous deiktes
+    
     clear_list();
     clear_list2();
     
