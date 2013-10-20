@@ -115,9 +115,9 @@ void dc_sweep(double **pinakasG,double *x1,double *y1,double *b,int size,int fla
 	}
       }
       
-      //fprintf(fp2,"to neo b[%d] einai : %lf\n\n",tmp->element->pos,b[tmp->element->pos]);
-      fprintf(fp2,"Gia vhma %lf exoume %s[%d] = %lf\n",j,tmp->element->tplot,tmp->element->value_plot,x1[tmp->element->value_plot-1]);
-      //fprintf(fp2,"Gia vhma %lf exoume %s[%d] = %lf\n",j,tmp->element->tplot,tmp->element->value_plot,x1[9]);
+      
+      fprintf(fp2,"For step %lf we have %s[%d] = %lf\n",j,tmp->element->tplot,tmp->element->value_plot,x1[tmp->element->value_plot-1]);
+      
      
       
     }
@@ -152,7 +152,7 @@ int *LU(double **A,int size){
   p = malloc(sizeof(int)*size);
   ret = p;
   for(i=0;i<size;i++){
-    p[i]=i;    			//pinakasG metathesis p
+    p[i]=i;    			//vector G perms p
   }
   
   for(k=0;k<size;k++){
@@ -193,7 +193,7 @@ int *LU(double **A,int size){
     
     
   }
-  printf("\nO LU pinakasG einai : \n");
+  printf("\nO LU vectorG einai : \n");
   printf("\n");
   
   for(i=0;i<size;i++){
@@ -238,7 +238,7 @@ void Cholesky(double **A,int size){
     m = A[k][k];
 
     if(m<0){
-      printf("Den einai thetika orismenos pinakasG\n"); 
+      printf("It isn't a positive definite vectorG\n"); 
       exit(0);
     }
   
@@ -457,7 +457,7 @@ void Bi_CG(double *x,double **A,double *b,double itol,int size,double *d,double 
     
       if (norm(r,size)/norm(b,size)<itol ||iter == size) break;
   }
-  printf("Mesa sti BCG kai kanw %lf epanalipseis\n",iter);
+  printf("In BCG and I do %lf iterations\n",iter);
   for(i = 0;i<size;i++){
      printf("To x[%d] = %lf\n",i,x[i]);
     }
