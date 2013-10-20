@@ -270,7 +270,7 @@ int *sort_according_to_pinv(int num_pinv, int npl){
 	}
 	 
 	else{  // if intersection is non empty
-		for(i=0; i<npl; i++){ // store non common places
+		for(i=0; i<npl; i++){ // store non-common places
 		  
 		      if( (ret_pin[keep][i] == 1) && !(ret_pin[keep][i] & ret_pin[keep_sec][i]) ){
 			
