@@ -21,7 +21,7 @@ extern FILE *jjin,*jjout,*mfp,*nfp2 ;
 int **ret_pin = NULL;//is a two-dimensional matrix that stores the information provided by .pin =>ret_pin[#p-inv][#place_integer]
 int ln_out = 0;// declares the number of the p-invariants
 
-
+/*parsing the .pin file which contains the information that we are interested in*/
 int read_PIN_file(int npl){
    
 	char *buffer, *num_token;
