@@ -237,7 +237,7 @@
       }
       
       
-      // ta vazw sthn lista
+      // add elements
       add_list(element);
       
     }while(!feof(fp));
