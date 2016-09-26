@@ -1,6 +1,19 @@
 /*
 Created on 15/07/2012
 Author : Marieta Kranta 
+
+The purpose of my diploma thesis was to optimize the performance of an open
+source modeling tool, GreatSPN, and make the tool user-input independent.
+In order to reduce the number of the nodes of the Decision Diagram that is
+created through the generation of the Petri Net System's reachability set, and
+consecutively improve execution time and diminish memory footprint we pro-
+posed a new heuristic algorithm. The algorithm proposed was evaluated by
+extending the existing source base of GreatSPN (implemented in C/C++) and
+by studying the behavior of distributed systems per Petri Nets. We managed
+to decrease the number of nodes, diminish memory footprint and gain better
+time execution in more than 50 percent of the initial results, on average.The
+complexity of the results were independent of the input. Experiments were
+performed solely on GreatSPN (C/C++ implementation)
 */
 # include <stdio.h>
 # include <stdlib.h>
